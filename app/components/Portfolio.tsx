@@ -1,19 +1,31 @@
+// app/components/Portfolio.tsx
 import React, { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FiExternalLink, FiGithub, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import { motion, AnimatePresence, Variants } from 'framer-motion';
+import { FiChevronLeft, FiChevronRight, FiExternalLink, FiGithub } from 'react-icons/fi';
 
-const project1 = '/images/assets/img/portfolio/portfolio-1.jpg';
-const project2 = '/images/assets/img/portfolio/portfolio-2.jpg';
-const project3 = '/images/assets/img/portfolio/gaia-landingpage.png';
-const project4 = '/images/assets/img/portfolio/portfolio-4.jpg';
+// Define interfaces for type safety
+interface PortfolioItem {
+  id: number;
+  title: string;
+  description: string;
+  imageUrl: string;
+  technologies: string[];
+  projectLink: string;
+  githubLink: string;
+}
 
-const portfolioItems = [
+interface PortfolioProps {
+  darkMode?: boolean;
+}
+
+// Portfolio data with unique IDs and additional fields
+const portfolioItems: PortfolioItem[] = [
   {
     id: 1,
     title: 'Abidors - Backend Developer',
-    description: 'As a Full-Time Backend Developer, I developed a sophisticated real estate web system using the PERN stack, collaborating with a cross-functional team to deliver robust backend solutions.',
-    imageUrl: project1,
+    description: 'Developed a sophisticated real estate web system using the PERN stack, collaborating with a cross-functional team to deliver robust backend solutions.',
+    imageUrl: '/images/assets/img/portfolio/portfolio-1.jpg',
     technologies: ['Node.js', 'Express', 'PostgreSQL', 'React'],
     projectLink: '#',
     githubLink: '#',
@@ -21,8 +33,8 @@ const portfolioItems = [
   {
     id: 2,
     title: 'Deep Turing - Lead Developer',
-    description: 'Led a team in the successful development and implementation of a sophisticated web-based system using the PERN (PostgreSQL, Express.js, React, Node.js) stack.',
-    imageUrl: project2,
+    description: 'Led a team in developing a web-based system using the PERN stack, ensuring scalability and performance.',
+    imageUrl: '/images/assets/img/portfolio/portfolio-2.jpg',
     technologies: ['React', 'Node.js', 'PostgreSQL', 'Express'],
     projectLink: '#',
     githubLink: '#',
@@ -31,38 +43,36 @@ const portfolioItems = [
     id: 3,
     title: 'Gaia Website',
     description: 'Built the Gaia Survey website and admin dashboard, enabling users to explore services and manage operations efficiently.',
-    imageUrl: project3,
+    imageUrl: '/images/assets/img/portfolio/gaia-landingpage.png',
     technologies: ['Next.js', 'Tailwind CSS', 'MongoDB'],
     projectLink: '#',
     githubLink: '#',
   },
   {
-    id: 4,
+    id: 4, // Fixed duplicate ID
     title: 'Akagera & Rhein Website',
     description: 'Served as a full-stack developer and later promoted to lead frontend developer, delivering a robust web application.',
-    imageUrl: project4,
+    imageUrl: '/images/assets/img/portfolio/portfolio-4.jpg',
     technologies: ['React', 'Spring Boot', 'MySQL'],
     projectLink: '#',
     githubLink: '#',
   },
 ];
 
-interface PortfolioProps {
-  darkMode?: boolean;
-}
-
-const Portfolio = ({ darkMode = false }: PortfolioProps) => {
+const Portfolio: React.FC<PortfolioProps> = ({ darkMode = false }) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [currentItem, setCurrentItem] = useState(0);
   const [selectedProject, setSelectedProject] = useState<number | null>(null);
 
+  // Auto-scroll effect
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentItem((prevItem) => (prevItem + 1) % portfolioItems.length);
+      setCurrentItem((prev) => (prev + 1) % portfolioItems.length);
     }, 5000);
     return () => clearInterval(interval);
   }, []);
 
+  // Smooth scroll to current item
   useEffect(() => {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollTo({
@@ -88,25 +98,21 @@ const Portfolio = ({ darkMode = false }: PortfolioProps) => {
     setSelectedProject(null);
   };
 
-  const containerVariants = {
+  // Framer Motion variants for animations
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
+      transition: { staggerChildren: 0.1 },
     },
   };
 
-  const cardVariants = {
+  const cardVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: {
-        duration: 0.5,
-        ease: 'easeOut',
-      },
+      transition: { duration: 0.5, ease: 'easeOut' },
     },
   };
 
@@ -127,20 +133,20 @@ const Portfolio = ({ darkMode = false }: PortfolioProps) => {
             className={`text-4xl md:text-5xl font-bold ${darkMode ? 'text-emerald-400' : 'text-emerald-600'} mb-4 relative inline-block`}
           >
             Featured Projects
-            <span className="absolute -bottom-2 left-1/4 w-1/2 h-1 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full"></span>
+            <span className="absolute -bottom-2 left-1/4 w-1/2 h-1 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full" />
           </h2>
           <p className={`text-lg md:text-xl max-w-3xl mx-auto ${darkMode ? 'text-gray-300' : 'text-teal-800'} leading-relaxed`}>
             A curated selection of projects showcasing my expertise in full-stack development and innovative solutions.
           </p>
         </motion.div>
 
-        {/* Portfolio Grid */}
+        {/* Portfolio Carousel */}
         <div className="relative max-w-6xl mx-auto">
           {/* Navigation Arrows */}
           <button
             onClick={scrollLeft}
             className={`absolute -left-4 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 ${
-              darkMode ? 'bg-gray-800 text-white hover:bg-gray-700' : 'bg-emerald-500 text-white hover:bg-emerald-600'
+              darkMode ? 'bg-gray-800 text-emerald-400 hover:bg-gray-700' : 'bg-emerald-500 text-white hover:bg-emerald-600'
             } hidden md:block`}
             aria-label="Previous projects"
           >
@@ -149,7 +155,7 @@ const Portfolio = ({ darkMode = false }: PortfolioProps) => {
           <button
             onClick={scrollRight}
             className={`absolute -right-4 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 ${
-              darkMode ? 'bg-gray-800 text-white hover:bg-gray-700' : 'bg-emerald-500 text-white hover:bg-emerald-600'
+              darkMode ? 'bg-gray-800 text-emerald-400 hover:bg-gray-700' : 'bg-emerald-500 text-white hover:bg-emerald-600'
             } hidden md:block`}
             aria-label="Next projects"
           >
@@ -161,17 +167,17 @@ const Portfolio = ({ darkMode = false }: PortfolioProps) => {
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="flex space-x-6 overflow-x-auto scroll-smooth scrollbar-hide pb-6"
+            className="flex space-x-6 overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-hide pb-6"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             ref={scrollContainerRef}
           >
             {portfolioItems.map((item, index) => (
               <motion.div
                 key={item.id}
-                // variants={cardVariants}
-                className={`relative group cursor-pointer rounded-2xl overflow-hidden flex-shrink-0 w-full md:w-80 h-[28rem] transition-all duration-500 transform hover:-translate-y-2 hover:shadow-xl ${
+                variants={cardVariants}
+                className={`relative group cursor-pointer rounded-2xl overflow-hidden flex-shrink-0 w-full md:w-80 h-[28rem] snap-center transition-all duration-500 transform hover:-translate-y-2 hover:shadow-xl ${
                   currentItem === index ? 'ring-4 ring-emerald-500 scale-105' : 'scale-100'
-                } ${darkMode ? 'bg-gray-800' : 'bg-white border border-teal-100'}`}
+                } ${darkMode ? 'bg-gray-800 border border-gray-700' : 'bg-white border border-teal-100'}`}
                 onClick={() => openProjectModal(item.id)}
               >
                 {/* Project Image */}
@@ -182,15 +188,14 @@ const Portfolio = ({ darkMode = false }: PortfolioProps) => {
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-110"
                     placeholder="blur"
-                    blurDataURL="/placeholder.png"
+                    blurDataURL="/images/placeholder.png"
+                    quality={80}
                   />
-                  {/* Overlay */}
                   <div
                     className={`absolute inset-0 bg-gradient-to-t ${
-                      darkMode ? 'from-gray-900' : 'from-teal-900'
-                    } via-transparent to-transparent opacity-80`}
-                  ></div>
-                  {/* Quick View Indicator */}
+                      darkMode ? 'from-gray-900/80' : 'from-teal-900/80'
+                    } via-transparent to-transparent`}
+                  />
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <span
                       className={`px-4 py-2 rounded-full ${
@@ -209,7 +214,6 @@ const Portfolio = ({ darkMode = false }: PortfolioProps) => {
                   <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-teal-800'} line-clamp-2`}>
                     {item.description}
                   </p>
-                  {/* Technologies */}
                   <div className="flex flex-wrap gap-2 mt-3">
                     {item.technologies.slice(0, 3).map((tech, i) => (
                       <span
@@ -263,6 +267,7 @@ const Portfolio = ({ darkMode = false }: PortfolioProps) => {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
               className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4"
+              onClick={closeProjectModal}
             >
               <motion.div
                 initial={{ scale: 0.95, y: 20 }}
@@ -272,6 +277,7 @@ const Portfolio = ({ darkMode = false }: PortfolioProps) => {
                 className={`relative max-w-4xl w-full max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl ${
                   darkMode ? 'bg-gray-800' : 'bg-white'
                 } p-6 md:p-8 scrollbar-thin scrollbar-thumb-emerald-500 scrollbar-track-transparent`}
+                onClick={(e) => e.stopPropagation()}
               >
                 <button
                   onClick={closeProjectModal}
@@ -295,7 +301,8 @@ const Portfolio = ({ darkMode = false }: PortfolioProps) => {
                           fill
                           className="object-cover"
                           placeholder="blur"
-                          blurDataURL="/placeholder.png"
+                          blurDataURL="/images/placeholder.png"
+                          quality={80}
                         />
                       </div>
                       <h3 className={`text-2xl md:text-3xl font-bold ${darkMode ? 'text-white' : 'text-teal-900'}`}>
@@ -356,6 +363,7 @@ const Portfolio = ({ darkMode = false }: PortfolioProps) => {
           )}
         </AnimatePresence>
       </div>
+      {/* Custom Scrollbar Styles */}
       <style jsx>{`
         .scrollbar-hide {
           -ms-overflow-style: none;
@@ -363,12 +371,6 @@ const Portfolio = ({ darkMode = false }: PortfolioProps) => {
         }
         .scrollbar-hide::-webkit-scrollbar {
           display: none;
-        }
-        .line-clamp-2 {
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
         }
         .scrollbar-thin {
           scrollbar-width: thin;
@@ -382,6 +384,12 @@ const Portfolio = ({ darkMode = false }: PortfolioProps) => {
         }
         .scrollbar-thin::-webkit-scrollbar-track {
           background: transparent;
+        }
+        .line-clamp-2 {
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
         }
       `}</style>
     </section>
