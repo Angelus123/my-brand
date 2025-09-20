@@ -91,7 +91,7 @@ const App: React.FC = () => {
                   darkMode ? 'text-gray-300' : 'text-gray-700'
                 }`}
               >
-                LET'S FLY HIGHER
+                LET&apos;S FLY HIGHER
               </span>
               <motion.button
                 onClick={toggleDarkMode}
