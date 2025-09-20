@@ -1,10 +1,13 @@
 'use client';
-
 import React from 'react';
 import { FaLinkedin, FaGithub, FaTwitter, FaEnvelope } from 'react-icons/fa';
 import { motion, Variants } from 'framer-motion';
 
-const ContactInfo: React.FC = () => {
+interface ContactInfoProps {
+  darkMode?: boolean;
+}
+
+const ContactInfo: React.FC<ContactInfoProps> = ({ darkMode = false }) => {
   // Individual icon animations
   const iconVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
@@ -40,9 +43,11 @@ const ContactInfo: React.FC = () => {
 
   return (
     <motion.div
-      className="hidden md:flex fixed top-1/3 left-4 flex-col space-y-4 z-50 
-                 bg-white/95 dark:bg-gray-800/95 backdrop-blur-md rounded-full 
-                 p-4 shadow-lg transition-colors duration-300"
+      className={`hidden md:flex fixed top-1/3 left-4 flex-col space-y-4 z-50 
+                 backdrop-blur-md rounded-lg 
+                 p-4 shadow-lg transition-colors duration-500 ${
+                   darkMode ? 'bg-gray-800/95' : 'bg-white/95'
+                 }`}
       variants={containerVariants}
       initial="hidden"
       animate="visible"
@@ -52,8 +57,11 @@ const ContactInfo: React.FC = () => {
         href="https://www.linkedin.com/in/izere-ange-felix-aa50b9175/"
         target="_blank"
         rel="noopener noreferrer"
-        className="text-gray-800 dark:text-gray-200 hover:text-emerald-500 dark:hover:text-emerald-400 
-                   transition-colors duration-300 animate-pulse-glow"
+        className={`transition-colors duration-300 animate-pulse-glow ${
+          darkMode
+            ? 'text-gray-200 hover:text-emerald-400'
+            : 'text-gray-800 hover:text-emerald-500'
+        }`}
         variants={iconVariants}
         custom={0}
         whileHover="hover"
@@ -69,8 +77,11 @@ const ContactInfo: React.FC = () => {
         href="https://github.com/Angelus123/"
         target="_blank"
         rel="noopener noreferrer"
-        className="text-gray-800 dark:text-gray-200 hover:text-emerald-500 dark:hover:text-emerald-400 
-                   transition-colors duration-300 animate-pulse-glow"
+        className={`transition-colors duration-300 animate-pulse-glow ${
+          darkMode
+            ? 'text-gray-200 hover:text-emerald-400'
+            : 'text-gray-800 hover:text-emerald-500'
+        }`}
         variants={iconVariants}
         custom={1}
         whileHover="hover"
@@ -86,8 +97,11 @@ const ContactInfo: React.FC = () => {
         href="https://x.com/izereangefelix"
         target="_blank"
         rel="noopener noreferrer"
-        className="text-gray-800 dark:text-gray-200 hover:text-emerald-500 dark:hover:text-emerald-400 
-                   transition-colors duration-300 animate-pulse-glow"
+        className={`transition-colors duration-300 animate-pulse-glow ${
+          darkMode
+            ? 'text-gray-200 hover:text-emerald-400'
+            : 'text-gray-800 hover:text-emerald-500'
+        }`}
         variants={iconVariants}
         custom={2}
         whileHover="hover"
@@ -101,8 +115,11 @@ const ContactInfo: React.FC = () => {
       {/* Email */}
       <motion.a
         href="mailto:izerefaifelix@gmail.com"
-        className="text-gray-800 dark:text-gray-200 hover:text-emerald-500 dark:hover:text-emerald-400 
-                   transition-colors duration-300 animate-pulse-glow"
+        className={`transition-colors duration-300 animate-pulse-glow ${
+          darkMode
+            ? 'text-gray-200 hover:text-emerald-400'
+            : 'text-gray-800 hover:text-emerald-500'
+        }`}
         variants={iconVariants}
         custom={3}
         whileHover="hover"

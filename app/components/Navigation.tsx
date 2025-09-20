@@ -1,26 +1,44 @@
-import React, { useState } from "react";
-import { Link as ScrollLink } from "react-scroll";
-import { FiHome, FiUser, FiCode, FiBriefcase, FiFolder, FiFileText, FiMenu, FiX } from "react-icons/fi";
+import React, { useState } from 'react';
+import { Link as ScrollLink } from 'react-scroll';
+import { FiHome, FiUser, FiCode, FiBriefcase, FiFolder, FiFileText, FiMenu, FiX, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface CombinedNavigationProps {
   darkMode?: boolean;
 }
 
 const CombinedNavigation: React.FC<CombinedNavigationProps> = ({ darkMode = false }) => {
-  const [activeSection, setActiveSection] = useState("hero");
+  const [activeSection, setActiveSection] = useState('hero');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const toggleExpand = () => {
+    setIsExpanded(!isExpanded);
+  };
+
+  // Framer Motion variants for animations
+  const navItemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, delay: i * 0.1, ease: 'easeOut' },
+    }),
+  };
+
   return (
     <>
       {/* Desktop Navigation (Visible on md and larger) */}
-      <nav
-        className={`hidden md:flex fixed top-1/2 right-4 transform -translate-y-1/2 flex-col space-y-3 p-2 rounded-xl
-                  ${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-gray-800 border-gray-700'}
-                  border shadow-lg z-50`}
+      <motion.nav
+        className={`hidden md:flex fixed top-1/2 right-4 transform -translate-y-1/2 flex-col space-y-3 p-4 rounded-xl border shadow-lg z-50 transition-all duration-500 ${
+          darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-teal-100'
+        } ${isExpanded ? 'w-48' : 'w-auto'}`}
+        initial="hidden"
+        animate="visible"
       >
         <NavItemDesktop
           to="hero"
@@ -29,6 +47,8 @@ const CombinedNavigation: React.FC<CombinedNavigationProps> = ({ darkMode = fals
           activeSection={activeSection}
           setActiveSection={setActiveSection}
           darkMode={darkMode}
+          isExpanded={isExpanded}
+          custom={0}
         />
         <NavItemDesktop
           to="about"
@@ -37,6 +57,8 @@ const CombinedNavigation: React.FC<CombinedNavigationProps> = ({ darkMode = fals
           activeSection={activeSection}
           setActiveSection={setActiveSection}
           darkMode={darkMode}
+          isExpanded={isExpanded}
+          custom={1}
         />
         <NavItemDesktop
           to="skill"
@@ -45,6 +67,8 @@ const CombinedNavigation: React.FC<CombinedNavigationProps> = ({ darkMode = fals
           activeSection={activeSection}
           setActiveSection={setActiveSection}
           darkMode={darkMode}
+          isExpanded={isExpanded}
+          custom={2}
         />
         <NavItemDesktop
           to="experiences"
@@ -53,6 +77,8 @@ const CombinedNavigation: React.FC<CombinedNavigationProps> = ({ darkMode = fals
           activeSection={activeSection}
           setActiveSection={setActiveSection}
           darkMode={darkMode}
+          isExpanded={isExpanded}
+          custom={3}
         />
         <NavItemDesktop
           to="portfolio"
@@ -61,6 +87,8 @@ const CombinedNavigation: React.FC<CombinedNavigationProps> = ({ darkMode = fals
           activeSection={activeSection}
           setActiveSection={setActiveSection}
           darkMode={darkMode}
+          isExpanded={isExpanded}
+          custom={4}
         />
         <NavItemDesktop
           to="resume"
@@ -69,26 +97,56 @@ const CombinedNavigation: React.FC<CombinedNavigationProps> = ({ darkMode = fals
           activeSection={activeSection}
           setActiveSection={setActiveSection}
           darkMode={darkMode}
+          isExpanded={isExpanded}
+          custom={5}
         />
-      </nav>
+        
+        {/* Expand/Collapse Button */}
+        <motion.button
+          onClick={toggleExpand}
+          className={`flex items-center justify-center w-full mt-4 p-2 rounded-lg transition-colors duration-300 ${
+            darkMode 
+              ? 'bg-gray-700 text-gray-300 hover:bg-gray-600' 
+              : 'bg-teal-50 text-teal-700 hover:bg-emerald-100'
+          }`}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          aria-label={isExpanded ? "Collapse navigation" : "Expand navigation"}
+        >
+          {isExpanded ? (
+            <FiChevronRight size={16} className="transition-transform duration-300" />
+          ) : (
+            <FiChevronLeft size={16} className="transition-transform duration-300" />
+          )}
+          {isExpanded && (
+            <span className="ml-2 text-xs font-medium">Collapse</span>
+          )}
+        </motion.button>
+      </motion.nav>
 
       {/* Mobile Hamburger Button */}
-      <button
+      <motion.button
         onClick={toggleMenu}
-        className={`md:hidden fixed top-2 right-4 p-2 rounded-full shadow-lg z-50
-                  ${darkMode ? 'bg-gray-800 text-gray-200 hover:bg-gray-700' : 'bg-white text-gray-800 hover:bg-gray-100'}
-                  transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500`}
-        aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+        className={`md:hidden fixed top-4 right-4 p-2 rounded-full shadow-lg z-50 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 ${
+          darkMode
+            ? 'bg-gray-800 text-gray-200 hover:bg-emerald-800'
+            : 'bg-white text-teal-800 hover:bg-emerald-100'
+        }`}
+        aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.95 }}
       >
         {isMenuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
-      </button>
+      </motion.button>
 
       {/* Mobile Navigation (Visible on mobile when menu open) */}
-      <nav
-        className={`md:hidden fixed inset-0 z-40 flex flex-col justify-center items-center space-y-6
-                  ${darkMode ? 'bg-gray-900/95' : 'bg-white/95'}
-                  transition-all duration-300 ease-in-out
-                  ${isMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-full pointer-events-none'}`}
+      <motion.nav
+        className={`md:hidden fixed inset-0 z-40 flex flex-col justify-center items-center space-y-6 transition-all duration-500 ${
+          darkMode ? 'bg-gray-900/95' : 'bg-white/95'
+        } ${isMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-full pointer-events-none'}`}
+        initial={{ opacity: 0, y: '-100%' }}
+        animate={{ opacity: isMenuOpen ? 1 : 0, y: isMenuOpen ? '0%' : '-100%' }}
+        transition={{ duration: 0.5, ease: 'easeInOut' }}
       >
         <NavItemMobile
           to="hero"
@@ -98,6 +156,7 @@ const CombinedNavigation: React.FC<CombinedNavigationProps> = ({ darkMode = fals
           setActiveSection={setActiveSection}
           darkMode={darkMode}
           onClick={() => setIsMenuOpen(false)}
+          custom={0}
         />
         <NavItemMobile
           to="about"
@@ -107,6 +166,7 @@ const CombinedNavigation: React.FC<CombinedNavigationProps> = ({ darkMode = fals
           setActiveSection={setActiveSection}
           darkMode={darkMode}
           onClick={() => setIsMenuOpen(false)}
+          custom={1}
         />
         <NavItemMobile
           to="skill"
@@ -116,6 +176,7 @@ const CombinedNavigation: React.FC<CombinedNavigationProps> = ({ darkMode = fals
           setActiveSection={setActiveSection}
           darkMode={darkMode}
           onClick={() => setIsMenuOpen(false)}
+          custom={2}
         />
         <NavItemMobile
           to="experiences"
@@ -125,6 +186,7 @@ const CombinedNavigation: React.FC<CombinedNavigationProps> = ({ darkMode = fals
           setActiveSection={setActiveSection}
           darkMode={darkMode}
           onClick={() => setIsMenuOpen(false)}
+          custom={3}
         />
         <NavItemMobile
           to="portfolio"
@@ -134,6 +196,7 @@ const CombinedNavigation: React.FC<CombinedNavigationProps> = ({ darkMode = fals
           setActiveSection={setActiveSection}
           darkMode={darkMode}
           onClick={() => setIsMenuOpen(false)}
+          custom={4}
         />
         <NavItemMobile
           to="resume"
@@ -143,8 +206,23 @@ const CombinedNavigation: React.FC<CombinedNavigationProps> = ({ darkMode = fals
           setActiveSection={setActiveSection}
           darkMode={darkMode}
           onClick={() => setIsMenuOpen(false)}
+          custom={5}
         />
-      </nav>
+        
+        {/* Close Menu Button for Mobile */}
+        <motion.button
+          onClick={() => setIsMenuOpen(false)}
+          className={`mt-8 px-6 py-3 rounded-lg font-medium transition-colors duration-300 ${
+            darkMode
+              ? 'bg-gray-800 text-gray-200 hover:bg-gray-700'
+              : 'bg-teal-100 text-teal-800 hover:bg-teal-200'
+          }`}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          Close Menu
+        </motion.button>
+      </motion.nav>
     </>
   );
 };
@@ -156,78 +234,157 @@ interface NavItemProps {
   activeSection: string;
   setActiveSection: (section: string) => void;
   darkMode: boolean;
+  custom: number;
+  isExpanded?: boolean;
 }
 
 interface NavItemMobileProps extends NavItemProps {
   onClick: () => void;
 }
 
-// Use NavItemProps directly instead of NavItemDesktopProps
-const NavItemDesktop = ({ to, label, icon, activeSection, setActiveSection, darkMode }: NavItemProps) => {
+const NavItemDesktop: React.FC<NavItemProps> = ({ 
+  to, 
+  label, 
+  icon, 
+  activeSection, 
+  setActiveSection, 
+  darkMode, 
+  isExpanded = false, 
+  custom 
+}) => {
   const isActive = activeSection === to;
 
   return (
-    <ScrollLink
-      to={to}
-      spy={true}
-      smooth={true}
-      offset={-50}
-      duration={500}
-      onSetActive={() => setActiveSection(to)}
-      className={`relative flex items-center justify-center w-12 h-12 rounded-lg cursor-pointer transition-all duration-300 group
-                ${isActive
-                  ? 'bg-gradient-to-br from-emerald-500 to-teal-600 text-white shadow-md'
-                  : darkMode
-                    ? 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                }`}
+    <motion.div
+      custom={custom}
+      variants={{
+        hidden: { opacity: 0, y: 20 },
+        visible: { opacity: 1, y: 0 },
+      }}
+      initial="hidden"
+      animate="visible"
+      transition={{ duration: 0.5, delay: custom * 0.1 }}
     >
-      <div
-        className={`absolute right-full mr-3 px-3 py-1.5 text-xs font-medium rounded-md shadow-md
-                  ${darkMode ? 'bg-gray-700 text-white' : 'bg-white text-gray-800'}
-                  opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none
-                  whitespace-nowrap transform -translate-y-1/2 top-1/2`}
+      <ScrollLink
+        to={to}
+        spy={true}
+        smooth={true}
+        offset={-50}
+        duration={500}
+        onSetActive={() => setActiveSection(to)}
+        className={`relative flex items-center ${
+          isExpanded ? 'justify-start w-full px-3' : 'justify-center w-12'
+        } h-12 rounded-lg cursor-pointer transition-all duration-300 group ${
+          isActive
+            ? 'bg-gradient-to-br from-emerald-500 to-teal-600 text-white shadow-lg'
+            : darkMode
+            ? 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+            : 'bg-teal-50 text-teal-700 hover:bg-emerald-100'
+        }`}
       >
-        {label}
-        <div
-          className={`absolute top-1/2 right-0 w-2 h-2 transform rotate-45 -translate-y-1/2 translate-x-1
-                    ${darkMode ? 'bg-gray-700' : 'bg-white'}`}
-        ></div>
-      </div>
-      <div className="flex items-center justify-center">{icon}</div>
-      {isActive && (
-        <div className="absolute -left-1 top-1/2 w-1 h-6 bg-emerald-500 rounded-full transform -translate-y-1/2"></div>
-      )}
-    </ScrollLink>
+        <motion.div 
+          className="flex items-center"
+          whileHover={{ scale: 1.1 }} 
+          whileTap={{ scale: 0.95 }}
+        >
+          {icon}
+          {isExpanded && (
+            <motion.span 
+              className="ml-3 text-sm font-medium"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3 }}
+            >
+              {label}
+            </motion.span>
+          )}
+        </motion.div>
+        
+        {/* Tooltip for collapsed state */}
+        {!isExpanded && (
+          <motion.div
+            className={`absolute right-full mr-3 px-3 py-1.5 text-xs font-medium rounded-md shadow-md whitespace-nowrap transform -translate-y-1/2 top-1/2 transition-opacity duration-300 pointer-events-none ${
+              darkMode ? 'bg-gray-700 text-gray-200' : 'bg-white text-teal-800'
+            } opacity-0 group-hover:opacity-100`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: isActive ? 1 : 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            {label}
+            <div
+              className={`absolute top-1/2 right-0 w-2 h-2 transform rotate-45 -translate-y-1/2 translate-x-1 ${
+                darkMode ? 'bg-gray-700' : 'bg-white'
+              }`}
+            ></div>
+          </motion.div>
+        )}
+        
+        {isActive && (
+          <motion.div
+            className="absolute -left-1 top-1/2 w-1 h-6 bg-emerald-500 rounded-full transform -translate-y-1/2"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
+          ></motion.div>
+        )}
+      </ScrollLink>
+    </motion.div>
   );
 };
 
-const NavItemMobile = ({ to, label, icon, activeSection, setActiveSection, darkMode, onClick }: NavItemMobileProps) => {
+const NavItemMobile: React.FC<NavItemMobileProps> = ({
+  to,
+  label,
+  icon,
+  activeSection,
+  setActiveSection,
+  darkMode,
+  onClick,
+  custom,
+}) => {
   const isActive = activeSection === to;
 
   return (
-    <ScrollLink
-      to={to}
-      spy={true}
-      smooth={true}
-      offset={-50}
-      duration={500}
-      onSetActive={() => setActiveSection(to)}
-      onClick={onClick}
-      className={`flex items-center space-x-3 px-6 py-3 rounded-lg cursor-pointer transition-all duration-300 w-64
-                ${isActive
-                  ? 'bg-gradient-to-r from-emerald-500 to-teal-600 text-white'
-                  : darkMode
-                    ? 'text-gray-200 hover:bg-gray-800'
-                    : 'text-gray-800 hover:bg-gray-100'
-                }`}
+    <motion.div
+      custom={custom}
+      variants={{
+        hidden: { opacity: 0, y: 20 },
+        visible: { opacity: 1, y: 0 },
+      }}
+      initial="hidden"
+      animate="visible"
+      transition={{ duration: 0.5, delay: custom * 0.1 }}
     >
-      <span className="flex-shrink-0">{icon}</span>
-      <span className="text-lg font-medium">{label}</span>
-      {isActive && (
-        <div className="absolute left-0 w-1 h-6 bg-emerald-500 rounded-r-full" />
-      )}
-    </ScrollLink>
+      <ScrollLink
+        to={to}
+        spy={true}
+        smooth={true}
+        offset={-50}
+        duration={500}
+        onSetActive={() => setActiveSection(to)}
+        onClick={onClick}
+        className={`flex items-center space-x-3 px-6 py-3 rounded-lg cursor-pointer transition-all duration-300 w-64 ${
+          isActive
+            ? 'bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-lg'
+            : darkMode
+            ? 'text-gray-200 hover:bg-gray-800'
+            : 'text-teal-800 hover:bg-emerald-50'
+        }`}
+      >
+        <motion.span className="flex-shrink-0" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
+          {icon}
+        </motion.span>
+        <span className="text-lg font-medium">{label}</span>
+        {isActive && (
+          <motion.div
+            className="absolute left-0 w-1 h-6 bg-emerald-500 rounded-r-full"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
+          ></motion.div>
+        )}
+      </ScrollLink>
+    </motion.div>
   );
 };
 
