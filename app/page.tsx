@@ -106,11 +106,11 @@ const App: React.FC = () => {
                 <span role="img" aria-label="wave" className="text-2xl md:text-4xl animate-wave">👋</span>
                 <span>, I am</span>
               </p>
-              <h1 className="text-3xl md:text-6xl py-2 font-bold uppercase tracking-widest text-emerald-600 dark:text-emerald-400 drop-shadow-lg animate-slide-in">
+              <h1 className="text-3xl md:text-6xl py-2 font-bold uppercase tracking-widest text-emerald-600 dark:text-white drop-shadow-lg animate-slide-in">
                 IZERE Ange Felix
               </h1>
               <div className="inline-block">
-                <p className="text-xl md:text-4xl py-2 font-semibold uppercase tracking-wider text-teal-800 dark:text-teal-200 drop-shadow-lg animate-typing overflow-hidden whitespace-nowrap border-r-4 border-teal-800 dark:border-teal-200 pr-1">
+                <p className="text-xl md:text-4xl py-2 font-semibold uppercase tracking-wider text-white dark:text-white drop-shadow-lg animate-typing overflow-hidden whitespace-nowrap border-r-4 border-teal-800 dark:border-teal-200 pr-1">
                   A Software Engineer
                 </p>
               </div>
