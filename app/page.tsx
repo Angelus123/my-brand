@@ -68,11 +68,12 @@ const App: React.FC = () => {
                   height={40}
                   className="transition-transform duration-300 hover:scale-110"
                 />
-                <span className="ml-2 font-bold text-emerald-600 dark:text-emerald-400 text-xl">IZERE Ange Felix</span>
+                <span className="ml-2 font-bold text-emerald-600 dark:text-emerald-400 text-xl">IZERE</span>
               </div>
             </ScrollLink>
             
             <div className="flex items-center space-x-4">
+              <span className="flex space-x-2">LET'S FLY HIGHER</span>
               <button
                 onClick={toggleDarkMode}
                 className="p-2 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-emerald-100 dark:hover:bg-emerald-800 transition-colors duration-300"
@@ -98,9 +99,9 @@ const App: React.FC = () => {
           <div className="absolute bottom-1/4 left-1/3 w-64 h-64 bg-lime-500 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-4000"></div>
         </div>
 
-        <div className="container mx-auto px-4 md:px-16 relative z-10">
+        <div className="container mx-auto px-4 md:px-20 relative z-10">
           <div className="flex flex-col md:flex-row items-center">
-            <div className="md:w-2/3 mt-16 md:mt-0">
+            <div className="md:w-2/3 lg:w-2/3 mt-16 md:mt-0">
               <p className="text-lg md:text-3xl font-semibold tracking-wider text-teal-900 dark:text-teal-100 flex items-center gap-2 animate-fade-in">
                 <span>Hello</span>
                 <span role="img" aria-label="wave" className="text-2xl md:text-4xl animate-wave">👋</span>
@@ -150,7 +151,7 @@ const App: React.FC = () => {
               duration={500}
               className="flex flex-col items-center text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors duration-300 cursor-pointer"
             >
-              <span className="mb-2 font-medium">Explore More</span>
+              <span className="mb-2 font-medium"></span>
               <FiChevronDown size={24} className="animate-bounce" />
             </ScrollLink>
           </div>
