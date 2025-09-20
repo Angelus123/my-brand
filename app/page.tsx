@@ -213,7 +213,7 @@ const App: React.FC = () => {
                 </p>
                 <div className="flex flex-wrap gap-5 mt-8">
                   <motion.a
-                    href="/assets/pdf/felix-software-engineer-5212025.pdf"
+                    href="/images/assets/pdf/felix-resume-9202025.pdf"
                     download
                     className={`inline-flex items-center px-8 py-4 font-semibold rounded-full shadow-md transition-all duration-300 ${
                       darkMode
