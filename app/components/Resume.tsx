@@ -121,7 +121,7 @@ const Resume = () => {
           {/* Download Button */}
           <motion.div variants={itemVariants} className="text-center">
             <a
-              href="/assets/pdf/felix-software-engineer-5212025.pdf"
+              href="/images/assets/pdf/felix-resume-9202025.pdf"
               download
               className="inline-flex items-center px-6 py-3 text-white bg-emerald-500 hover:bg-emerald-600 font-semibold rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-emerald-500"
               aria-label="Download resume PDF"
