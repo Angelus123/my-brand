@@ -34,16 +34,16 @@ const CombinedNavigation: React.FC<CombinedNavigationProps> = ({ darkMode = fals
     <>
       {/* Desktop Navigation (Visible on md and larger) */}
       <motion.nav
-        className={`hidden md:flex fixed top-1/2 right-4 transform -translate-y-1/2 flex-col space-y-3 p-4 rounded-xl border shadow-lg z-50 transition-all duration-500 ${
+        className={`hidden md:flex fixed top-1/2 right-2 transform -translate-y-1/2 flex-col space-y-2 p-2 rounded-xl border shadow-lg z-50 transition-all duration-500 ${
           darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-teal-100'
-        } ${isExpanded ? 'w-48' : 'w-auto'}`}
+        } ${isExpanded ? 'w-36' : 'w-auto'}`}
         initial="hidden"
         animate="visible"
       >
         <NavItemDesktop
           to="hero"
           label="Home"
-          icon={<FiHome size={16} />}
+          icon={<FiHome size={14} />}
           activeSection={activeSection}
           setActiveSection={setActiveSection}
           darkMode={darkMode}
@@ -53,7 +53,7 @@ const CombinedNavigation: React.FC<CombinedNavigationProps> = ({ darkMode = fals
         <NavItemDesktop
           to="about"
           label="About"
-          icon={<FiUser size={16} />}
+          icon={<FiUser size={14} />}
           activeSection={activeSection}
           setActiveSection={setActiveSection}
           darkMode={darkMode}
@@ -63,7 +63,7 @@ const CombinedNavigation: React.FC<CombinedNavigationProps> = ({ darkMode = fals
         <NavItemDesktop
           to="skill"
           label="Skills"
-          icon={<FiCode size={16} />}
+          icon={<FiCode size={14} />}
           activeSection={activeSection}
           setActiveSection={setActiveSection}
           darkMode={darkMode}
@@ -73,7 +73,7 @@ const CombinedNavigation: React.FC<CombinedNavigationProps> = ({ darkMode = fals
         <NavItemDesktop
           to="experiences"
           label="Experience"
-          icon={<FiBriefcase size={16} />}
+          icon={<FiBriefcase size={14} />}
           activeSection={activeSection}
           setActiveSection={setActiveSection}
           darkMode={darkMode}
@@ -83,7 +83,7 @@ const CombinedNavigation: React.FC<CombinedNavigationProps> = ({ darkMode = fals
         <NavItemDesktop
           to="portfolio"
           label="Portfolio"
-          icon={<FiFolder size={16} />}
+          icon={<FiFolder size={14} />}
           activeSection={activeSection}
           setActiveSection={setActiveSection}
           darkMode={darkMode}
@@ -93,7 +93,7 @@ const CombinedNavigation: React.FC<CombinedNavigationProps> = ({ darkMode = fals
         <NavItemDesktop
           to="resume"
           label="Resume"
-          icon={<FiFileText size={16} />}
+          icon={<FiFileText size={14} />}
           activeSection={activeSection}
           setActiveSection={setActiveSection}
           darkMode={darkMode}
@@ -104,7 +104,7 @@ const CombinedNavigation: React.FC<CombinedNavigationProps> = ({ darkMode = fals
         {/* Expand/Collapse Button */}
         <motion.button
           onClick={toggleExpand}
-          className={`flex items-center justify-center w-full mt-4 p-2 rounded-lg transition-colors duration-300 ${
+          className={`flex items-center justify-center w-full mt-2 p-1 rounded-md transition-colors duration-300 ${
             darkMode 
               ? 'bg-gray-700 text-gray-300 hover:bg-gray-600' 
               : 'bg-teal-50 text-teal-700 hover:bg-emerald-100'
@@ -114,12 +114,12 @@ const CombinedNavigation: React.FC<CombinedNavigationProps> = ({ darkMode = fals
           aria-label={isExpanded ? "Collapse navigation" : "Expand navigation"}
         >
           {isExpanded ? (
-            <FiChevronRight size={16} className="transition-transform duration-300" />
+            <FiChevronRight size={14} className="transition-transform duration-300" />
           ) : (
-            <FiChevronLeft size={16} className="transition-transform duration-300" />
+            <FiChevronLeft size={14} className="transition-transform duration-300" />
           )}
           {isExpanded && (
-            <span className="ml-2 text-xs font-medium">Collapse</span>
+            <span className="ml-1 text-xs font-medium">Collapse</span>
           )}
         </motion.button>
       </motion.nav>
@@ -127,7 +127,7 @@ const CombinedNavigation: React.FC<CombinedNavigationProps> = ({ darkMode = fals
       {/* Mobile Hamburger Button */}
       <motion.button
         onClick={toggleMenu}
-        className={`md:hidden fixed top-4 right-4 p-2 rounded-full shadow-lg z-50 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 ${
+        className={`md:hidden fixed top-3 right-3 p-2 rounded-full shadow-lg z-50 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 ${
           darkMode
             ? 'bg-gray-800 text-gray-200 hover:bg-emerald-800'
             : 'bg-white text-teal-800 hover:bg-emerald-100'
@@ -136,12 +136,12 @@ const CombinedNavigation: React.FC<CombinedNavigationProps> = ({ darkMode = fals
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
       >
-        {isMenuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+        {isMenuOpen ? <FiX size={20} /> : <FiMenu size={20} />}
       </motion.button>
 
       {/* Mobile Navigation (Visible on mobile when menu open) */}
       <motion.nav
-        className={`md:hidden fixed inset-0 z-40 flex flex-col justify-center items-center space-y-6 transition-all duration-500 ${
+        className={`md:hidden fixed inset-0 z-40 flex flex-col justify-center items-center space-y-4 transition-all duration-500 ${
           darkMode ? 'bg-gray-900/95' : 'bg-white/95'
         } ${isMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-full pointer-events-none'}`}
         initial={{ opacity: 0, y: '-100%' }}
@@ -151,7 +151,7 @@ const CombinedNavigation: React.FC<CombinedNavigationProps> = ({ darkMode = fals
         <NavItemMobile
           to="hero"
           label="Home"
-          icon={<FiHome size={24} />}
+          icon={<FiHome size={20} />}
           activeSection={activeSection}
           setActiveSection={setActiveSection}
           darkMode={darkMode}
@@ -161,7 +161,7 @@ const CombinedNavigation: React.FC<CombinedNavigationProps> = ({ darkMode = fals
         <NavItemMobile
           to="about"
           label="About"
-          icon={<FiUser size={24} />}
+          icon={<FiUser size={20} />}
           activeSection={activeSection}
           setActiveSection={setActiveSection}
           darkMode={darkMode}
@@ -171,7 +171,7 @@ const CombinedNavigation: React.FC<CombinedNavigationProps> = ({ darkMode = fals
         <NavItemMobile
           to="skill"
           label="Skills"
-          icon={<FiCode size={24} />}
+          icon={<FiCode size={20} />}
           activeSection={activeSection}
           setActiveSection={setActiveSection}
           darkMode={darkMode}
@@ -181,7 +181,7 @@ const CombinedNavigation: React.FC<CombinedNavigationProps> = ({ darkMode = fals
         <NavItemMobile
           to="experiences"
           label="Experience"
-          icon={<FiBriefcase size={24} />}
+          icon={<FiBriefcase size={20} />}
           activeSection={activeSection}
           setActiveSection={setActiveSection}
           darkMode={darkMode}
@@ -191,7 +191,7 @@ const CombinedNavigation: React.FC<CombinedNavigationProps> = ({ darkMode = fals
         <NavItemMobile
           to="portfolio"
           label="Portfolio"
-          icon={<FiFolder size={24} />}
+          icon={<FiFolder size={20} />}
           activeSection={activeSection}
           setActiveSection={setActiveSection}
           darkMode={darkMode}
@@ -201,7 +201,7 @@ const CombinedNavigation: React.FC<CombinedNavigationProps> = ({ darkMode = fals
         <NavItemMobile
           to="resume"
           label="Resume"
-          icon={<FiFileText size={24} />}
+          icon={<FiFileText size={20} />}
           activeSection={activeSection}
           setActiveSection={setActiveSection}
           darkMode={darkMode}
@@ -212,7 +212,7 @@ const CombinedNavigation: React.FC<CombinedNavigationProps> = ({ darkMode = fals
         {/* Close Menu Button for Mobile */}
         <motion.button
           onClick={() => setIsMenuOpen(false)}
-          className={`mt-8 px-6 py-3 rounded-lg font-medium transition-colors duration-300 ${
+          className={`mt-6 px-5 py-2 rounded-md font-medium transition-colors duration-300 ${
             darkMode
               ? 'bg-gray-800 text-gray-200 hover:bg-gray-700'
               : 'bg-teal-100 text-teal-800 hover:bg-teal-200'
@@ -273,8 +273,8 @@ const NavItemDesktop: React.FC<NavItemProps> = ({
         duration={500}
         onSetActive={() => setActiveSection(to)}
         className={`relative flex items-center ${
-          isExpanded ? 'justify-start w-full px-3' : 'justify-center w-12'
-        } h-12 rounded-lg cursor-pointer transition-all duration-300 group ${
+          isExpanded ? 'justify-start w-full px-2' : 'justify-center w-10'
+        } h-10 rounded-md cursor-pointer transition-all duration-300 group ${
           isActive
             ? 'bg-gradient-to-br from-emerald-500 to-teal-600 text-white shadow-lg'
             : darkMode
@@ -290,7 +290,7 @@ const NavItemDesktop: React.FC<NavItemProps> = ({
           {icon}
           {isExpanded && (
             <motion.span 
-              className="ml-3 text-sm font-medium"
+              className="ml-2 text-xs font-medium"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3 }}
@@ -303,7 +303,7 @@ const NavItemDesktop: React.FC<NavItemProps> = ({
         {/* Tooltip for collapsed state */}
         {!isExpanded && (
           <motion.div
-            className={`absolute right-full mr-3 px-3 py-1.5 text-xs font-medium rounded-md shadow-md whitespace-nowrap transform -translate-y-1/2 top-1/2 transition-opacity duration-300 pointer-events-none ${
+            className={`absolute right-full mr-2 px-2 py-1 text-xs font-medium rounded-md shadow-md whitespace-nowrap transform -translate-y-1/2 top-1/2 transition-opacity duration-300 pointer-events-none ${
               darkMode ? 'bg-gray-700 text-gray-200' : 'bg-white text-teal-800'
             } opacity-0 group-hover:opacity-100`}
             initial={{ opacity: 0 }}
@@ -312,7 +312,7 @@ const NavItemDesktop: React.FC<NavItemProps> = ({
           >
             {label}
             <div
-              className={`absolute top-1/2 right-0 w-2 h-2 transform rotate-45 -translate-y-1/2 translate-x-1 ${
+              className={`absolute top-1/2 right-0 w-1.5 h-1.5 transform rotate-45 -translate-y-1/2 translate-x-0.5 ${
                 darkMode ? 'bg-gray-700' : 'bg-white'
               }`}
             ></div>
@@ -321,7 +321,7 @@ const NavItemDesktop: React.FC<NavItemProps> = ({
         
         {isActive && (
           <motion.div
-            className="absolute -left-1 top-1/2 w-1 h-6 bg-emerald-500 rounded-full transform -translate-y-1/2"
+            className="absolute -left-0.5 top-1/2 w-1 h-5 bg-emerald-500 rounded-full transform -translate-y-1/2"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.3 }}
@@ -363,7 +363,7 @@ const NavItemMobile: React.FC<NavItemMobileProps> = ({
         duration={500}
         onSetActive={() => setActiveSection(to)}
         onClick={onClick}
-        className={`flex items-center space-x-3 px-6 py-3 rounded-lg cursor-pointer transition-all duration-300 w-64 ${
+        className={`flex items-center space-x-2 px-5 py-2 rounded-md cursor-pointer transition-all duration-300 w-56 ${
           isActive
             ? 'bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-lg'
             : darkMode
@@ -374,10 +374,10 @@ const NavItemMobile: React.FC<NavItemMobileProps> = ({
         <motion.span className="flex-shrink-0" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
           {icon}
         </motion.span>
-        <span className="text-lg font-medium">{label}</span>
+        <span className="text-base font-medium">{label}</span>
         {isActive && (
           <motion.div
-            className="absolute left-0 w-1 h-6 bg-emerald-500 rounded-r-full"
+            className="absolute left-0 w-1 h-5 bg-emerald-500 rounded-r-full"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.3 }}

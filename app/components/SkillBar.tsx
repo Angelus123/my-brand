@@ -28,17 +28,17 @@ export default function SkillBar({ skill, years, totalYears, darkMode = false }:
   return (
     <div className="group relative flex flex-col items-center space-y-2 w-20 p-3 rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-md">
       {/* Skill bar container */}
-      <div className="relative h-32 w-5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden shadow-inner">
+      <div className="relative h-20 w-3 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden shadow-inner">
         {/* Animated fill bar */}
         <div
-          className={`absolute bottom-0 w-5 rounded-full ${getProficiencyColor()} transition-all duration-1000 ease-out`}
+          className={`absolute bottom-0 w-3 rounded-full ${getProficiencyColor()} transition-all duration-1000 ease-out`}
           style={{ height: `${percent}%` }}
         />
         
         {/* Measurement markers */}
-        <div className="absolute left-0 w-5 h-px bg-gray-300 dark:bg-gray-600 top-1/4"></div>
-        <div className="absolute left-0 w-5 h-px bg-gray-300 dark:bg-gray-600 top-1/2"></div>
-        <div className="absolute left-0 w-5 h-px bg-gray-300 dark:bg-gray-600 top-3/4"></div>
+        <div className="absolute left-0 w-3 h-px bg-gray-300 dark:bg-gray-600 top-1/4"></div>
+        <div className="absolute left-0 w-3 h-px bg-gray-300 dark:bg-gray-600 top-1/2"></div>
+        <div className="absolute left-0 w-3 h-px bg-gray-300 dark:bg-gray-600 top-3/4"></div>
       </div>
       
       {/* Skill name */}
@@ -48,10 +48,10 @@ export default function SkillBar({ skill, years, totalYears, darkMode = false }:
       
       {/* Years indicator */}
       <div className="flex flex-col items-center">
-        <span className="text-[11px] text-gray-500 dark:text-gray-400 font-semibold">
+        <span className="text-xs text-gray-500 dark:text-gray-400 font-semibold">
           {years} {years === 1 ? 'yr' : 'yrs'}
         </span>
-        <div className="w-8 h-1 bg-gray-200 dark:bg-gray-700 rounded-full mt-1 overflow-hidden">
+        <div className="w-10 h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full mt-1 overflow-hidden">
           <div 
             className={`h-full ${getProficiencyColor().replace('to-t', 'to-r')} rounded-full`}
             style={{ width: `${percent}%` }}

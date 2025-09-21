@@ -1,10 +1,8 @@
-// app/components/Experiences.tsx
 import { useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { FiExternalLink, FiMapPin, FiCalendar, FiChevronRight } from "react-icons/fi";
 
-// Define interfaces for type safety
 interface Experience {
   company: string;
   role: string;
@@ -16,7 +14,7 @@ interface Experience {
   technologies?: string[];
 }
 
-interface ExperiencesProps {
+interface Props {
   darkMode: boolean;
 }
 
@@ -29,7 +27,7 @@ const experiences: Experience[] = [
     location: "On Site, Rwanda",
     description: [
       "Support OpenText SMAX on Azure, AWS, GCP, and on-prem (install, upgrade, troubleshoot).",
-      "Develop internal software tools using Python, Java, and JavaScript to automate tasks and boost productivity.",
+      "Develop internal software tools using Python, Java, JavaScript to automate tasks and boost productivity.",
       "Use Docker, Kubernetes, and logs for debugging and deployment.",
       "Integrate systems with external partners for secure, efficient data exchange.",
     ],
@@ -56,8 +54,7 @@ const experiences: Experience[] = [
     period: "Mar 2019 - Nov 2019",
     image: "/images/assets/img/portfolio/gaia-landingpage.png",
     location: "Kigali, Rwanda",
-    description:
-      "Gaia Survey Rwanda, a division of Gaia Survey AB Sweden, specializes in constructing wells/boreholes, water pipeline installations, and various pump systems, offering water treatment, storage solutions, and ongoing maintenance for public and private wells.",
+    description: "Gaia Survey Rwanda, a division of Gaia Survey AB Sweden, specializes in constructing wells/boreholes, water pipeline installations, and various pump systems, offering water treatment, storage solutions, and ongoing maintenance for public and private wells.",
     technologies: ["JavaScript", "HTML/CSS", "PHP", "MySQL"],
   },
   {
@@ -95,222 +92,147 @@ const experiences: Experience[] = [
   },
 ];
 
-const Experiences: React.FC<ExperiencesProps> = ({ darkMode }) => {
-  const [selectedCompany, setSelectedCompany] = useState<string>(experiences[0].company);
-  const [showFullDescription, setShowFullDescription] = useState(false);
+const Experiences: React.FC<Props> = ({ darkMode }) => {
+  const [selected, setSelected] = useState(experiences[0].company);
+  const [showFull, setShowFull] = useState(false);
+  const current = experiences.find((exp) => exp.company === selected);
 
-  const toggleDescription = () => setShowFullDescription(!showFullDescription);
-  const currentExperience = experiences.find((exp) => exp.company === selectedCompany);
-
-  // Framer Motion variants for animations
-  const containerVariants: Variants = {
+  const container: Variants = {
     hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1 },
-    },
+    visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
   };
 
-  const itemVariants: Variants = {
+  const item: Variants = {
     hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5, ease: "easeOut" },
-    },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
   };
 
   return (
-    <section
-      id="experiences"
-      className={`py-20 ${darkMode ? 'bg-gray-900' : 'bg-gradient-to-br from-emerald-50 to-teal-100'} transition-colors duration-500`}
-    >
-      <div className="container mx-auto px-4 md:px-12">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <h2
-            className={`text-4xl md:text-5xl font-bold ${darkMode ? 'text-emerald-400' : 'text-emerald-600'} mb-4 relative inline-block`}
-          >
+    <section className={`py-16 ${darkMode ? 'bg-gray-900' : 'bg-gradient-to-br from-emerald-50 to-teal-100'} transition-colors duration-500`}>
+      <div className="container mx-auto px-4 md:px-6 max-w-5xl"> {/* Changed from max-w-5xl to max-w-6xl */}
+        <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="text-center mb-12">
+          <h2 className={`text-3xl md:text-4xl font-extrabold ${darkMode ? 'text-emerald-400' : 'text-emerald-600'} mb-3 relative inline-block`}>
             My Professional Journey
-            <span className="absolute -bottom-2 left-1/4 w-1/2 h-1 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full" />
+            <span className="absolute -bottom-1 left-1/4 w-1/2 h-1 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full" />
           </h2>
-          <p className={`text-lg md:text-xl max-w-3xl mx-auto ${darkMode ? 'text-gray-300' : 'text-teal-800'} leading-relaxed`}>
-            A showcase of my professional experiences, highlighting my contributions to innovative projects and teams.
+          <p className={`text-base md:text-lg max-w-2xl mx-auto ${darkMode ? 'text-gray-200' : 'text-teal-800'} leading-relaxed`}>
+            A showcase of my professional experiences, highlighting contributions to innovative projects.
           </p>
         </motion.div>
 
-        {/* Main Content */}
-        <motion.div variants={containerVariants} initial="hidden" animate="visible" className="flex flex-col md:flex-row gap-8 relative">
-          {/* Vertical Timeline Line */}
-          <div className="absolute left-4 md:left-1/3 top-0 bottom-0 w-0.5 bg-gradient-to-b from-emerald-400 via-teal-400 to-teal-600 opacity-60 hidden md:block"></div>
+        <motion.div variants={container} initial="hidden" animate="visible" className="flex flex-col md:flex-row gap-4 relative">
+          <div className="absolute left-4 md:left-1/3 top-0 bottom-0 w-0.5 bg-gradient-to-b from-emerald-400 to-teal-600 opacity-50 hidden md:block"></div>
           
-          {/* Left Side: Company Tabs */}
-          <motion.div
-            variants={itemVariants}
-            className="w-full md:w-1/3 flex flex-col space-y-4 relative"
-          >
-            {experiences.map((exp, index) => (
+          <motion.div variants={item} className="w-full md:w-1/3 flex flex-col space-y-3">
+            {experiences.map((exp, i) => (
               <motion.div
                 key={exp.company}
                 className="relative"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: index * 0.1 }}
+                transition={{ delay: i * 0.1 }}
               >
-                {/* Timeline Dot */}
-                <div className={`absolute -left-7 top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full z-10 ${
-                  selectedCompany === exp.company 
-                    ? 'bg-emerald-500 ring-4 ring-emerald-500/30' 
-                    : darkMode 
-                      ? 'bg-gray-600' 
-                      : 'bg-teal-300'
+                <div className={`absolute -left-6 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full z-10 ${
+                  selected === exp.company ? 'bg-emerald-500 ring-2 ring-emerald-500/30' : darkMode ? 'bg-gray-600' : 'bg-teal-300'
                 } hidden md:block`}></div>
-                
                 <motion.button
-                  variants={itemVariants}
-                  onClick={() => {
-                    setSelectedCompany(exp.company);
-                    setShowFullDescription(false);
-                  }}
-                  className={`relative flex items-center justify-between w-full p-5 rounded-xl transition-all duration-300 group ${
-                    selectedCompany === exp.company
-                      ? 'bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-lg'
+                  variants={item}
+                  onClick={() => { setSelected(exp.company); setShowFull(false); }}
+                  className={`flex justify-between w-full p-4 rounded-lg transition-all duration-300 group ${
+                    selected === exp.company
+                      ? 'bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-md'
                       : darkMode
-                      ? 'bg-gray-800 text-gray-300 hover:bg-gray-700'
-                      : 'bg-white text-teal-800 hover:bg-teal-50 border border-teal-100'
-                  }`}
-                  whileHover={{ 
-                    scale: 1.02,
-                    boxShadow: selectedCompany !== exp.company ? "0 10px 25px -5px rgba(0, 0, 0, 0.1)" : ""
-                  }}
-                  whileTap={{ scale: 0.98 }}
+                      ? 'bg-gray-800 text-gray-200 hover:bg-gray-700/80 shadow-sm border border-gray-700'
+                      : 'bg-white text-teal-800 hover:bg-teal-50/50 shadow-sm border border-teal-200'
+                  } focus:outline-none focus:ring-2 focus:ring-emerald-500/50`}
+                  whileHover={{ scale: 1.03, boxShadow: selected !== exp.company ? "0 6px 20px -5px rgba(0, 0, 0, 0.15)" : "" }}
+                  whileTap={{ scale: 0.97 }}
                 >
                   <div className="flex flex-col items-start">
-                    <span className="font-bold text-lg">{exp.company}</span>
-                    <span className={`text-sm mt-1 ${
-                      selectedCompany === exp.company ? 'text-emerald-100' : darkMode ? 'text-gray-400' : 'text-teal-600'
-                    }`}>
+                    <span className="font-semibold text-base">{exp.company}</span>
+                    <span className={`text-xs mt-1 ${selected === exp.company ? 'text-emerald-100' : darkMode ? 'text-gray-400' : 'text-teal-600'}`}>
                       {exp.role}
                     </span>
                   </div>
-                  
-                  <div className={`flex items-center ${
-                    selectedCompany === exp.company ? 'text-white' : darkMode ? 'text-gray-400' : 'text-teal-400'
-                  }`}>
-                    <span className="text-xs mr-2 hidden sm:block">{exp.period.split(" ")[0]}</span>
-                    <FiChevronRight className={`transform transition-transform ${
-                      selectedCompany === exp.company ? 'rotate-0' : 'group-hover:translate-x-1'
-                    }`} />
+                  <div className={`flex items-center ${selected === exp.company ? 'text-white' : darkMode ? 'text-gray-400' : 'text-teal-400'}`}>
+                    <span className="text-xs mr-1 hidden sm:block">{exp.period.split(" ")[0]}</span>
+                    <FiChevronRight className={`transition-transform ${selected === exp.company ? 'rotate-90' : 'group-hover:translate-x-0.5'}`} />
                   </div>
-                  
-                  {selectedCompany === exp.company && (
-                    <span className="absolute -left-1 top-1/2 h-8 w-1 bg-emerald-500 rounded-r-full transform -translate-y-1/2 hidden md:block" />
+                  {selected === exp.company && (
+                    <span className="absolute -left-1 top-1/2 h-6 w-1 bg-emerald-500 rounded-r-full -translate-y-1/2 hidden md:block" />
                   )}
                 </motion.button>
               </motion.div>
             ))}
           </motion.div>
 
-          {/* Right Side: Details */}
           <AnimatePresence mode="wait">
-            {currentExperience && (
+            {current && (
               <motion.div
-                key={currentExperience.company}
-                variants={itemVariants}
+                key={current.company}
+                variants={item}
                 initial="hidden"
                 animate="visible"
                 exit={{ opacity: 0, y: 20 }}
                 transition={{ duration: 0.3 }}
-                className="w-full md:w-2/3 relative"
+                className="w-full md:w-2/3"
               >
-                {/* Vertical Separator Line */}
-                <div className="absolute -left-4 top-0 bottom-0 w-0.5 bg-gradient-to-b from-teal-300 to-teal-500 opacity-50 hidden md:block"></div>
-                
-                <div className="relative rounded-2xl overflow-hidden shadow-xl border border-teal-100/50">
-                  {/* Image */}
-                  <div className="relative h-64 md:h-80">
+                <div className="absolute -left-3 top-0 bottom-0 w-0.5 bg-gradient-to-b from-teal-300 to-teal-500 opacity-40 hidden md:block"></div>
+                <div className={`rounded-xl overflow-hidden shadow-lg ${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-teal-100'} border`}>
+                  <div className="relative h-56 md:h-72">
                     <Image
-                      src={currentExperience.image}
-                      alt={`${currentExperience.company} illustration`}
+                      src={current.image}
+                      alt={`${current.company} illustration`}
                       fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-110"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
                       placeholder="blur"
                       blurDataURL="/images/placeholder.png"
-                      quality={80}
+                      quality={75}
                     />
-                    <div
-                      className={`absolute inset-0 bg-gradient-to-t ${
-                        darkMode ? 'from-gray-900/80' : 'from-teal-900/80'
-                      } via-transparent to-transparent`}
-                    />
+                    <div className={`absolute inset-0 bg-gradient-to-t ${darkMode ? 'from-gray-900/70' : 'from-teal-900/70'} via-transparent to-transparent`} />
                   </div>
-                  {/* Details */}
-                  <div className={`p-6 ${darkMode ? 'bg-gray-800' : 'bg-white'} rounded-b-2xl`}>
-                    <h3 className={`text-2xl md:text-3xl font-bold ${darkMode ? 'text-white' : 'text-teal-900'} mb-2`}>
-                      {currentExperience.role}
-                    </h3>
-                    
-                    <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-4">
+                  <div className={`p-5 ${darkMode ? 'bg-gray-800' : 'bg-white'} rounded-b-xl`}>
+                    <h3 className={`text-xl md:text-2xl font-bold ${darkMode ? 'text-white' : 'text-teal-900'} mb-2`}>{current.role}</h3>
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-4">
                       <div className="flex items-center">
-                        <FiCalendar className={`mr-2 ${darkMode ? 'text-emerald-400' : 'text-emerald-600'}`} />
-                        <p className={`text-sm font-semibold ${darkMode ? 'text-gray-300' : 'text-teal-700'}`}>
-                          {currentExperience.period}
-                        </p>
+                        <FiCalendar className={`mr-1.5 ${darkMode ? 'text-emerald-400' : 'text-emerald-600'}`} size={14} />
+                        <p className={`text-xs font-medium ${darkMode ? 'text-gray-200' : 'text-teal-700'}`}>{current.period}</p>
                       </div>
                       <div className="flex items-center">
-                        <FiMapPin className={`mr-2 ${darkMode ? 'text-emerald-400' : 'text-emerald-600'}`} />
-                        <p className={`text-sm font-semibold ${darkMode ? 'text-gray-300' : 'text-teal-700'}`}>
-                          {currentExperience.location}
-                        </p>
+                        <FiMapPin className={`mr-1.5 ${darkMode ? 'text-emerald-400' : 'text-emerald-600'}`} size={14} />
+                        <p className={`text-xs font-medium ${darkMode ? 'text-gray-200' : 'text-teal-700'}`}>{current.location}</p>
                       </div>
                     </div>
-                    
-                    <div className={`text-base ${darkMode ? 'text-gray-300' : 'text-teal-800'} leading-relaxed mb-6`}>
-                      {Array.isArray(currentExperience.description) ? (
+                    <div className={`text-sm ${darkMode ? 'text-gray-200' : 'text-teal-800'} mb-5 leading-relaxed`}>
+                      {Array.isArray(current.description) ? (
                         <>
-                          <ul className="list-disc pl-5 space-y-2">
-                            {(showFullDescription
-                              ? currentExperience.description
-                              : currentExperience.description.slice(0, 3)
-                            ).map((item, index) => (
-                              <li key={index}>{item}</li>
+                          <ul className="list-disc pl-4 space-y-1.5">
+                            {(showFull ? current.description : current.description.slice(0, 3)).map((item, i) => (
+                              <li key={i} className="text-sm">{item}</li>
                             ))}
                           </ul>
-                          {currentExperience.description.length > 3 && (
+                          {current.description.length > 3 && (
                             <button
-                              onClick={toggleDescription}
-                              className={`mt-4 text-sm font-medium ${
-                                darkMode ? 'text-emerald-400 hover:text-emerald-300' : 'text-emerald-500 hover:text-emerald-600'
-                              } underline transition-colors duration-300 flex items-center`}
+                              onClick={() => setShowFull(!showFull)}
+                              className={`mt-3 text-xs font-medium ${darkMode ? 'text-emerald-400 hover:text-emerald-300' : 'text-emerald-500 hover:text-emerald-600'} underline transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/50`}
                             >
-                              {showFullDescription ? "Show Less" : "Show More"}
+                              {showFull ? "Show Less" : "Show More"}
                             </button>
                           )}
                         </>
                       ) : (
-                        <p>{currentExperience.description}</p>
+                        <p>{current.description}</p>
                       )}
                     </div>
-                    
-                    {/* Technologies */}
-                    {currentExperience.technologies && (
-                      <div className="mb-6">
-                        <h4 className={`text-lg font-semibold mb-2 ${darkMode ? 'text-gray-200' : 'text-teal-800'}`}>
-                          Technologies & Skills:
-                        </h4>
-                        <div className="flex flex-wrap gap-2">
-                          {currentExperience.technologies.map((tech, index) => (
+                    {current.technologies && (
+                      <div className="mb-5">
+                        <h4 className={`text-base font-semibold mb-2 ${darkMode ? 'text-gray-100' : 'text-teal-800'}`}>Technologies & Skills</h4>
+                        <div className="flex flex-wrap gap-1.5">
+                          {current.technologies.map((tech, i) => (
                             <span
-                              key={index}
-                              className={`px-3 py-1 rounded-full text-sm ${
-                                darkMode
-                                  ? 'bg-emerald-900/50 text-emerald-300'
-                                  : 'bg-emerald-100 text-emerald-700'
+                              key={i}
+                              className={`px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                                darkMode ? 'bg-emerald-900/60 text-emerald-200' : 'bg-emerald-100/80 text-emerald-700'
                               }`}
                             >
                               {tech}
@@ -319,20 +241,17 @@ const Experiences: React.FC<ExperiencesProps> = ({ darkMode }) => {
                         </div>
                       </div>
                     )}
-                    
-                    {currentExperience.link && (
+                    {current.link && (
                       <a
-                        href={currentExperience.link}
+                        href={current.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`inline-flex items-center px-5 py-2.5 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 ${
-                          darkMode
-                            ? 'bg-emerald-600 text-white hover:bg-emerald-700'
-                            : 'bg-emerald-500 text-white hover:bg-emerald-600'
+                        className={`inline-flex items-center px-4 py-2 rounded-md font-medium text-sm transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 ${
+                          darkMode ? 'bg-emerald-600 text-white hover:bg-emerald-700' : 'bg-emerald-500 text-white hover:bg-emerald-600'
                         }`}
                       >
-                        <FiExternalLink className="mr-2" />
-                        Visit {currentExperience.company}
+                        <FiExternalLink className="mr-1.5" size={14} />
+                        Visit {current.company}
                       </a>
                     )}
                   </div>
