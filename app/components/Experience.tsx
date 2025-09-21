@@ -25,7 +25,7 @@ const experiences: Experience[] = [
     company: "Teknowledge",
     role: "Software Developer",
     period: "Oct 2023 – Present",
-    image: "/images/assets/img/portfolio/portfolio-1.jpg",
+    image: "/images/assets/img/portfolio/teknowledge-landing.png",
     location: "On Site, Rwanda",
     description: [
       "Support OpenText SMAX on Azure, AWS, GCP, and on-prem (install, upgrade, troubleshoot).",
@@ -39,7 +39,7 @@ const experiences: Experience[] = [
     company: "Abidors",
     role: "Software Developer",
     period: "Mar 2023 - Aug 2023",
-    image: "/images/assets/img/portfolio/portfolio-2.jpg",
+    image: "/images/assets/img/portfolio/abidors-landing.png",
     location: "Remote, Bulgaria",
     description: [
       "Built a full-featured platform using the PERN stack (PostgreSQL, Express.js, React, Node.js).",
@@ -80,7 +80,7 @@ const experiences: Experience[] = [
     company: "Andela",
     role: "Software Developer",
     period: "Jan 2019 - Apr 2020",
-    image: "/images/assets/img/portfolio/portfolio-4.jpg",
+    image: "/images/assets/img/portfolio/andela-landing.png",
     location: "Kigali, Rwanda",
     description: [
       "Selected as a full-stack developer through Andela's competitive talent program.",
