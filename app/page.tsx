@@ -174,7 +174,7 @@ const App: React.FC = () => {
                 <span>, I am</span>
               </motion.p>
               <motion.h1
-                className={`text-4xl md:text-7xl py-3 font-extrabold uppercase tracking-widest drop-shadow-md ${
+                className={`text-3xl md:text-5xl py-3 font-extrabold uppercase tracking-widest drop-shadow-md ${
                   darkMode ? 'text-white' : 'text-gray-900'
                 }`}
                 initial={{ opacity: 0, x: -30 }}
