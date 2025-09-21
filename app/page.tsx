@@ -266,11 +266,11 @@ const App: React.FC = () => {
               spy={true}
               smooth={true}
               duration={500}
-              className={`flex flex-col items-center transition-colors duration-300 cursor-pointer ${
-                darkMode ? 'text-teal-400 hover:text-teal-300' : 'text-gray-700 hover:text-teal-600'
+              className={`flex flex-col items-center transition-colors font-bold duration-300 cursor-pointer ${
+                darkMode ? 'text-teal-400 hover:text-teal-600' : 'text-teal-600 hover:text-teal-600'
               }`}
             >
-              <span className="mb-1 text-sm font-medium">Discover More</span>
+              <span className="mb-1 text-sm font-extrabold">Discover More</span>
               <motion.div animate={{ y: [0, -10, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
                 <FiChevronDown size={24} />
               </motion.div>
@@ -438,7 +438,7 @@ const App: React.FC = () => {
           darkMode ? 'bg-gray-900' : 'bg-gray-50'
         }`}
       >
-        <Skills />
+        <Skills darkMode={darkMode} />
       </section>
 
       <section
